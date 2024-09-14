@@ -1,11 +1,13 @@
 package dev.estrogen.cameraprovider;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +34,12 @@ public class ImageCaptureActivity extends Activity {
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
         cameraIntent.setClipData(ClipData.newRawUri("", outputUri));
         cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        startActivityForResult(cameraIntent, REQUEST_CAPTURE);
+        try {
+            startActivityForResult(cameraIntent, REQUEST_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.no_camera_app_message, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

@@ -4,11 +4,14 @@
 
     <application
         android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Panel"
         tools:targetApi="35">
         <activity
             android:name=".ImageCaptureActivity"
+            android:label="@string/take_photo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT"/>

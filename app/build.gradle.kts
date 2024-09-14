@@ -16,8 +16,8 @@ android {
         applicationId = "dev.estrogen.cameraprovider"
         minSdk = 19
         targetSdk = 35
-        versionCode = 1
-        versionName = "1"
+        versionCode = 5
+        versionName = "5"
     }
 
     buildTypes {

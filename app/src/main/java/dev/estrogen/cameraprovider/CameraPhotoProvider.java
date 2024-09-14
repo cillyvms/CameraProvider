@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ public class CameraPhotoProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         String[] proj;
         if (projection == null) {
-            proj = new String[]{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
+            proj = new String[]{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE, MediaStore.MediaColumns.MIME_TYPE};
         } else {
             proj = projection;
         }
@@ -53,6 +54,9 @@ public class CameraPhotoProvider extends ContentProvider {
                         break;
                     case OpenableColumns.SIZE:
                         row[i] = requestedFile.length();
+                        break;
+                    case MediaStore.MediaColumns.MIME_TYPE:
+                        row[i] = "image/jpeg";
                         break;
                 }
             }

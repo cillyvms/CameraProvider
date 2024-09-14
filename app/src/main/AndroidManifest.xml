@@ -6,6 +6,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
-        tools:targetApi="35" />
+        tools:targetApi="35">
+        <provider
+            android:name=".CameraPhotoProvider"
+            android:authorities="dev.estrogen.cameraprovider.photo"
+            android:exported="false"
+            android:grantUriPermissions="true"/>
+    </application>
 
 </manifest>

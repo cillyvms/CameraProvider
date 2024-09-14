@@ -1,6 +1,7 @@
 package dev.estrogen.cameraprovider;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +18,15 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class CameraPhotoProvider extends ContentProvider {
+    @NonNull
+    static Uri uriForFilename(String filename) {
+        return new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_CONTENT)
+                .authority("dev.estrogen.cameraprovider.photo")
+                .encodedPath(filename)
+                .build();
+    }
+
     @Override
     public boolean onCreate() {
         return true;

@@ -7,6 +7,17 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Translucent.NoTitleBar"
         tools:targetApi="35">
+        <activity
+            android:name=".ImageCaptureActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.OPENABLE"/>
+                <data android:mimeType="image/jpeg"/>
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".CameraPhotoProvider"
             android:authorities="dev.estrogen.cameraprovider.photo"

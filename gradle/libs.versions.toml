@@ -1,6 +1,6 @@
 [versions]
-agp = "8.7.1"
-annotationJvm = "1.9.0"
+agp = "8.7.2"
+annotationJvm = "1.9.1"
 
 [libraries]
 androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }

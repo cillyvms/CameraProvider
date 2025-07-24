@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Panel"
-        tools:targetApi="35">
+        android:intentMatchingFlags="enforceIntentFilter"
+        tools:targetApi="36">
         <activity
             android:name=".ImageCaptureActivity"
             android:label="@string/take_photo"

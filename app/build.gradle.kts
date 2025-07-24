@@ -10,12 +10,12 @@ java {
 
 android {
     namespace = "dev.estrogen.cameraprovider"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "dev.estrogen.cameraprovider"
         minSdk = 19
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 5
         versionName = "5"
     }

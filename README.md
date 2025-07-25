@@ -1,11 +1,10 @@
 ![Camera Provider Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp)
 # CameraProvider
-A simple app for Android allowing you to take pictures on the fly when opening a file.
+CameraProvider is an Android app that allows you to jump to the camera straight from a file open dialog.
+A newly taken picture will be automatically delivered to the requesting app.
 
-## Use
-Open a file in any app making use of the standard Android file picker. CameraProvider can be chosen
-as a file source to take a new picture instead of selecting an existing file. It will open your
-phone's camera app and deliver a taken picture as a file to the requesting app.
+It simplifies attaching pictures in apps which provide a file open functionality, but don't have a
+way to take a picture natively, including websites. Useful for communicators running in a web browser.
 
 ## License
 CameraProvider is licensed under the terms of the

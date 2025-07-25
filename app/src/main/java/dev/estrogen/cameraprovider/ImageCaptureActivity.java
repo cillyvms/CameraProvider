@@ -1,10 +1,15 @@
 package dev.estrogen.cameraprovider;
 
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Toast;
@@ -22,6 +27,7 @@ public class ImageCaptureActivity extends Activity {
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd", Locale.US);
     private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
     private static final int REQUEST_CAPTURE = 1;
+    private static final int CLEANUP_JOB_ID = 1;
 
     private Uri outputUri = null;
 
@@ -39,6 +45,19 @@ public class ImageCaptureActivity extends Activity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, R.string.no_camera_app_message, Toast.LENGTH_SHORT).show();
             finish();
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // low importance job, doesn't need to be scheduled on device boot
+            JobInfo ji = new JobInfo.Builder(CLEANUP_JOB_ID, new ComponentName(this, PeriodicCleanupJobService.class))
+                    .setPeriodic(1000*60*60*24 /* 1 day */)
+                    .setRequiresCharging(true)
+                    .setRequiresDeviceIdle(true)
+                    .build();
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            jobScheduler.schedule(ji);
         }
     }
 

@@ -101,7 +101,7 @@ public class CameraPhotoProvider extends ContentProvider {
         int modeBits = ParcelFileDescriptor.parseMode(mode);
         if ((modeBits & ParcelFileDescriptor.MODE_READ_ONLY) == 0) {
             // if writing make sure the parent directory exists
-            File capturesDir = getCapturesDir();
+            File capturesDir = getCapturesDir(requireContextCompat());
             if (!capturesDir.isDirectory() && !capturesDir.mkdir()) {
                 throw new IllegalStateException("Cannot create captures directory.");
             }
@@ -120,12 +120,12 @@ public class CameraPhotoProvider extends ContentProvider {
         if (".".equals(filename) || "..".equals(filename)) {
             return null;
         }
-        return new File(getCapturesDir(), filename);
+        return new File(getCapturesDir(requireContextCompat()), filename);
     }
 
     @NonNull
-    private File getCapturesDir() {
-        return new File(requireContextCompat().getCacheDir(), "captures");
+    static File getCapturesDir(Context ctx) {
+        return new File(ctx.getCacheDir(), "captures");
     }
 
     @NonNull

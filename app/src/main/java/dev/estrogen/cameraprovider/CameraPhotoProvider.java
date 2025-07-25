@@ -16,13 +16,40 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.exifinterface.media.ExifInterface;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+class LazyExifLoader {
+    private static final String TAG = "LazyExifLoader";
+    private final File srcFile;
+    private ExifInterface exif = null;
+    private boolean initialized = false;
+
+    LazyExifLoader(File file) {
+        srcFile = file;
+    }
+
+    @Nullable
+    public ExifInterface get() {
+        if (!initialized) {
+            initialized = true;
+            try {
+                exif = new ExifInterface(srcFile);
+            } catch (IOException e) {
+                Log.w(TAG, "failed to load exif data", e);
+            }
+        }
+        return exif;
+    }
+}
 
 public class CameraPhotoProvider extends ContentProvider {
     @NonNull
@@ -51,6 +78,7 @@ public class CameraPhotoProvider extends ContentProvider {
         MatrixCursor cur = new MatrixCursor(proj, 1);
 
         File requestedFile = fileFromUri(uri);
+        LazyExifLoader exif = new LazyExifLoader(requestedFile);
         if (requestedFile != null && requestedFile.isFile()) {
             Object[] row = new Object[proj.length];
             for (int i = 0; i < proj.length; i++) {
@@ -63,6 +91,10 @@ public class CameraPhotoProvider extends ContentProvider {
                         break;
                     case MediaStore.MediaColumns.MIME_TYPE:
                         row[i] = "image/jpeg";
+                        break;
+                    case MediaStore.MediaColumns.ORIENTATION:
+                        ExifInterface e = exif.get();
+                        row[i] = e != null ? e.getRotationDegrees() : 0;
                         break;
                 }
             }

@@ -38,4 +38,5 @@ android {
 
 dependencies {
     compileOnly(libs.androidx.annotation.jvm)
+    implementation(project(":vendor:exifinterface"))
 }

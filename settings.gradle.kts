@@ -19,4 +19,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CameraProvider"
-include(":app")
+include(":app", ":vendor:exifinterface")
